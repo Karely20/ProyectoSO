@@ -55,12 +55,11 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
 1. Se creó un repositorio en GitHub donde se creó el archivo `README.md` con la documentación del proyecto y el dataset `spotify_2023.csv` que contiene los datos que serán procesados por el programa.
 2. Desde la terminal de Ubuntu se clonó el repositorio con el comando:
 
-        git clone https://github.com/Karely20/ProyectoSO.git
-        cd ProyectoSO
+       git clone https://github.com/Karely20/ProyectoSO.git
+       cd ProyectoSO
+   Este proceso descargó automaticamente el dataset y el README al entorno de trabajo.
 
-  Este proceso descargó automaticamente el dataset y el README al entorno de trabajo.
-
-3. Dentro de la carpeta del repositorio se creó el archivo `proyecto.c` utilizando el editor de texto `nano`:
+  4. Dentro de la carpeta del repositorio se creó el archivo `proyecto.c` utilizando el editor de texto `nano`:
 
        nano proyecto.c
   Se escribió todo el código fuente directamente en la maquina virtual, implementando la lectura del CSV, el procesamiento secuencial, el procesamiento paralelo   con 3 hilos y la medición de tiempos.
