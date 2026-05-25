@@ -86,9 +86,15 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
 <img width="919" height="369" alt="Captura de pantalla 2026-05-25 171130" src="https://github.com/user-attachments/assets/a038b2b0-dbcf-4058-8e61-a49f116864f0" />
 
 Se definen las librerías necesarias para el programa:
-- `_GNU_SOURCE` y `_POSIX_C_SOURCE` permiten activar funciones de Linux que facilitan el manejo del csv y el manejo del tiempo para cada proceso.
-- `MAX_LINEA` define el tamaño del buffer que se usa para leer cada línea del csv.
-- `pthread.h` permite crear y gestionar hilos.
-- `time.h` permite medir tiempos con precisión.
-- `MAX_FILAS` es el número máximo de filas del csv.
-- `NUM_HILOS` es la cantidad de hilos paralelos a usar.
+## Configuración y Dependencias
+
+A continuación se detallan las directivas, librerías y constantes clave utilizadas en el desarrollo de este proyecto:
+
+| Elemento | Descripción |
+| :--- | :--- |
+| `_GNU_SOURCE` <br> `_POSIX_C_SOURCE` | Permiten activar funciones de Linux que facilitan el manejo del CSV y el manejo del tiempo para cada proceso. |
+| `pthread.h` | Permite crear y gestionar hilos paralelos. |
+| `time.h` | Permite medir tiempos de ejecución con alta precisión. |
+| `MAX_LINEA` | Define el tamaño del buffer que se usa para leer cada línea del CSV. |
+| `MAX_FILAS` | Es el número máximo de filas del CSV que se pueden procesar. |
+| `NUM_HILOS` | Es la cantidad de hilos paralelos a usar para el procesamiento. |
