@@ -62,8 +62,7 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
   4. Dentro de la carpeta del repositorio se creó el archivo `proyecto.c` utilizando el editor de texto `nano`:
 
          nano proyecto.c
-  Se escribió todo el código fuente directamente en la maquina virtual, implementando la lectura del CSV, el procesamiento secuencial, el procesamiento paralelo   con 3 hilos y la medición de tiempos.
-  
+     Se escribió todo el código fuente directamente en la maquina virtual, implementando la lectura del CSV, el procesamiento secuencial, el procesamiento paralelo   con 3 hilos y la medición de tiempos.
 4. Una vex terminado el código se compiló con `gcc` indicando la librería de los hilos:
 
         gcc proyecto.c -o proyecto -lpthread
