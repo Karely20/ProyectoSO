@@ -16,5 +16,6 @@ Se utilizó el archivo `spotify_2023.csv`, que contienía 953 canciones con 22 c
 Tras un análisis exhaustivo del dataset a implementar, se identificaron los siguientes campos que serían útiles para la limpieza de valores nulos numéricos, la imputación de valores categóricos por la moda y la normalización de datos con escala de 0 a 1:
 
 | Tipo | Columnas |
-| Numéricas | artist_count, released_year, released_month, released_day, in_spotify_playlists, in_spotify_charts, streams, in_apple_playlists, in_apple_charts, in_deezer_playlists, in_deezer_charts, in_shazam_charts, bpm, danceability_%, valence_%, energy_%, acousticness_%, instrumentalness_%, liveness_%, speechiness_% |
-| Categóricas | `key`, `mode` |
+| :--- | :--- |
+| **Numéricas** | artist_count, released_year, released_month, released_day, in_spotify_playlists, in_spotify_charts, streams, in_apple_playlists, in_apple_charts, in_deezer_playlists, in_deezer_charts, in_shazam_charts, bpm, danceability_%, valence_%, energy_%, acousticness_%, instrumentalness_%, liveness_%, speechiness_% |
+| **Categoricas** | `key`, `mode` |
