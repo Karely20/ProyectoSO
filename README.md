@@ -27,7 +27,7 @@ Igualmente se identificaron los valores nulos dentro del dataset que serían út
 | `in_shazam_charts` | 50 |
 | `key` | 95 |
 
-## Funcionamiento del programa
+## Objetivo del programa
 Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
 
 1. **Limpieza de valores nulos numéricos:**
@@ -80,3 +80,13 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
         git add proyecto.c
         git commit -m "Proyecto SO"
         git push origin main
+
+## Explicación del código
+### Librerías y constantes
+<img width="919" height="369" alt="Captura de pantalla 2026-05-25 171130" src="https://github.com/user-attachments/assets/a038b2b0-dbcf-4058-8e61-a49f116864f0" />
+
+Se definen las librerías necesarias para el programa:
+- `pthread.h:` permite crear y gestionar hilos.
+- `time.h:` permite medir tiempos con precisión.
+
+
