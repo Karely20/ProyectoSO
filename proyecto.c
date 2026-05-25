@@ -16,7 +16,7 @@
 typedef struct{
 	int id;
 	float streams;
-	float in_shazam; ///......................................//
+	float in_shazam;
 	char key[10];
 	char mode[15];
 } Transaccion;
@@ -58,7 +58,7 @@ void cargarDatos(){
 		/* Inicializar con valores nulos */
 		dataset[i].id = i + 1;
 		dataset[i].streams = -1.0;
-		dataset[i].in_shazam = -1.0; //............................................//
+		dataset[i].in_shazam = -1.0;
 		strcpy(dataset[i].key, "VACIO");
 		strcpy(dataset[i].mode, "VACIO");
 
@@ -108,8 +108,8 @@ void procesar_transaccion(int index){
 		pthread_mutex_unlock(&mutex_stats);
 	}
 
-	if(dataset[index].in_shazam < 0){ //...................................................//
-		dataset[index].in_shazam = 120.0; //Media aprox. //...........................................//
+	if(dataset[index].in_shazam < 0){
+		dataset[index].in_shazam = 120.0; //Media aprox.
 		pthread_mutex_lock(&mutex_stats);
 		total_nulos++;
 		pthread_mutex_unlock(&mutex_stats);
@@ -128,7 +128,7 @@ void procesar_transaccion(int index){
 	dataset[index].streams = dataset[index].streams / 3500000000;
 
 	//bpm: min = 65, max = 206
-	dataset[index].in_shazam = (dataset[index].in_shazam - 65.0) / (206.0 - 65.0); //...........................................//
+	dataset[index].in_shazam = (dataset[index].in_shazam - 65.0) / (206.0 - 65.0);
 }
 
 /* Funcion que ejecuta cada pthread */
