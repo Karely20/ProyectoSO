@@ -23,6 +23,6 @@ Tras un análisis exhaustivo del dataset a implementar, se identificaron los sig
 Igualmente se identificaron los valores nulos dentro del dataset que serían útiles para la limpieza de valores nulos numéricos y la imputación de valores categóricos por la moda:
 
 | Columna | Nulos |
-| ;--- | ;--- |
+| :--- | :--- |
 | `in_shazam_charts` | 50 |
 | `key` | 95 |
