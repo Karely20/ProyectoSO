@@ -30,20 +30,23 @@ Igualmente se identificaron los valores nulos dentro del dataset que serían út
 ## Funcionamiento del programa
 Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
 
-1. **Limpieza de valores nulos numéricos**
+1. **Limpieza de valores nulos numéricos:**
   Los campos numéricos vacíos se reemplazan con la media calculada sobre todos los valores válidos de esa columna.
-  Ejemplo:
-  in_shazam_charts = ""  →  in_shazam_charts = 567.32  (media global)
 
-3. **Imputación de valores categóricos con la moda**
+       Ejemplo:
+         in_shazam_charts = ""  →  in_shazam_charts = 567.32  (media global)
+
+3. **Imputación de valores categóricos con la moda:**
   Los campos de texto vacíos se reemplazan con el valor más frecuente (moda) de esa columna.
-  Ejemplo:
-  key = ""  →  key = "C#"  (moda global de la columna key)
 
-5. **Normalización (0 a 1)**
-   
+       Ejemplo:
+        key = ""  →  key = "C#"  (moda global de la columna key)
+
+5. **Normalización (0 a 1):**
   Todos los valores numéricos se escalan al rango [0, 1] con la fórmula:
+
   $$valor_{norm} = \frac{x - min}{max - min}$$
-  Ejemplo:
-  bpm = 125,  min_bpm = 65,  max_bpm = 206
-  norm_bpm = (125 - 65) / (206 - 65) = 0.4255
+  
+      Ejemplo:
+        bpm = 125,  min_bpm = 65,  max_bpm = 206
+        norm_bpm = (125 - 65) / (206 - 65) = 0.4255
