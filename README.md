@@ -50,3 +50,35 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
       Ejemplo:
         bpm = 125,  min_bpm = 65,  max_bpm = 206
         norm_bpm = (125 - 65) / (206 - 65) = 0.4255
+
+# PROCEDIMIENTO DE EJECUCIÓN
+1. Se creó un repositorio en GitHub donde se creó el archivo `README.md` con la documentación del proyecto y el dataset `spotify_2023.csv` que contiene los datos que serán procesados por el programa.
+2. Desde la terminal de Ubuntu se clonó el repositorio con el comando:
+
+        git clone https://github.com/Karely20/ProyectoSO.git
+        cd ProyectoSO
+
+  Este proceso descargó automaticamente el dataset y el README al entorno de trabajo.
+
+3. Dentro de la carpeta del repositorio se creó el archivo `proyecto.c` utilizando el editor de texto `nano`:
+
+       nano proyecto.c
+  Se escribió todo el código fuente directamente en la maquina virtual, implementando la lectura del CSV, el procesamiento secuencial, el procesamiento paralelo   con 3 hilos y la medición de tiempos.
+  
+4. Una vex terminado el código se compiló con `gcc` indicando la librería de los hilos:
+
+        gcc proyecto.c -o proyecto -lpthread
+
+   Esto generó el ejecutable `proyecto` listo para correr.
+
+5. Se ejecutó el programa con:
+
+        ./proyecto
+    
+   El programa leyó el archivo `spotify_2023.csv`, procesó las 953 canciones en modo secuencial y luego en modo paralelo con 3 hilos, mostrando los tiempos y resultados en pantalla.
+
+6. Una vez verificado el funcionamiento correcto del programa, se subió el archivo `proyecto.c` al repositorio con los siguientes comandos:
+
+        git add proyecto.c
+        git commit -m "Proyecto SO"
+        git push origin main
