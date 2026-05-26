@@ -151,7 +151,7 @@ $$x_{norm} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}$$
 Esto permite comparar columnas que originalmente tenían rangos muy distintos como: `streams` que iba hasta 3.5 mil millones, mientras que `in_shazam` iba hasta 2387.
 
 ## Hilos
-<img width="916" height="502" alt="image" src="https://github.com/user-attachments/assets/a5ac462e-8690-490b-a384-4dfc2fed905d" />
+<img width="920" height="556" alt="image" src="https://github.com/user-attachments/assets/fb42f3ed-712b-472d-bc0f-149f852060c0" />
 
 Es la función que ejecuta cada hilo. Recibe su rango de filas (`inicio` y `fin`), mide su propio tiempo con `clock_gettime`, procesa cada fila llamando a `procesar_transaccion` y al terminar imprime su resultado. El mutex en el `printf` evita que los mensajes de distintos hilos se mezclen en pantalla.
 
