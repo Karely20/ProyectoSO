@@ -124,17 +124,17 @@ Calcula la diferencia entre dos marcas de tiempo en segundos con precisión de n
 ## Función para cargar datos del CSV
 <img width="718" height="516" alt="image" src="https://github.com/user-attachments/assets/b4e43677-d994-4934-b6a0-6b93810798ec" />
 
-Primero, se inicia abriendo el archivo csv con `fopen` y saltándose el encabezado con `fgets`. Y, antes de leer cada fila, inicializa todos los campos con sus valores nulos (`-1.0` para numéricos, `"VACIO"` para categóricos) con `strcpy`, para poder detectarlos facilmente en el procesamiento.
+Primero, se inicia abriendo el archivo CSV con `fopen` y saltándose el encabezado con `fgets`. Y, antes de leer cada fila, inicializa todos los campos con sus valores nulos (`-1.0` para numéricos, `"VACIO"` para categóricos) con `strcpy`, para poder detectarlos facilmente en el procesamiento.
 
 <img width="601" height="539" alt="image" src="https://github.com/user-attachments/assets/1745908c-aae5-4479-b983-ac76ebc4fef1" />
 
-Luega, esta función lee el CSV línea por línea y divide cada una por comas con `strsep` y revisa el número de columna para guardar solo las necesarias: `stream`, `in_shazam` y `key`, donde, con `strlen` se verifica si un campo del csv tiene algún o valor o está vacío.
+Luega, esta función lee el CSV línea por línea y divide cada una por comas con `strsep` y revisa el número de columna para guardar solo las necesarias: `stream`, `in_shazam` y `key`, donde, con `strlen` se verifica si un campo del CSV tiene algún o valor o está vacío.
 
 ## Transacciones
 ### Paso 1: Limpieza de números nulos 
 <img width="922" height="195" alt="image" src="https://github.com/user-attachments/assets/40618289-1d25-4c4e-983c-88f52fcab096" />
 
-Si `in_shazam` vale -1.0, vacío en el csv, se reemplaza con la media aproximada del resto de valores válidos. El mutex protege el contador para que los hilos no lo corrompan. `streams` tiene un funcionamiento parecido.
+Si `in_shazam` vale -1.0, vacío en el CSV, se reemplaza con la media aproximada del resto de valores válidos. El mutex protege el contador para que los hilos no lo corrompan. `streams` tiene un funcionamiento parecido.
 
 ### Paso 2: Imputación categórica por moda
 <img width="923" height="191" alt="image" src="https://github.com/user-attachments/assets/90e1a498-0d02-46b1-80da-ce86a0da243f" />
