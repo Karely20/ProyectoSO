@@ -83,7 +83,8 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
 
 ## Explicación del código
 ### Librerías y constantes
-<img width="919" height="369" alt="Captura de pantalla 2026-05-25 171130" src="https://github.com/user-attachments/assets/a038b2b0-dbcf-4058-8e61-a49f116864f0" />
+<img width="920" height="223" alt="image" src="https://github.com/user-attachments/assets/fdb4fa5d-d439-497e-8df1-8e3cbb0856a4" />
+
 
 Se definen las librerías necesarias para el programa:
 ## Configuración y Dependencias
@@ -98,3 +99,76 @@ A continuación se detallan las directivas, librerías y constantes clave utiliz
 | `MAX_LINEA` | Define el tamaño del buffer que se usa para leer cada línea del CSV. |
 | `MAX_FILAS` | Es el número máximo de filas del CSV que se pueden procesar. |
 | `NUM_HILOS` | Es la cantidad de hilos paralelos a usar para el procesamiento. |
+
+### Estructura de datos
+<img width="916" height="223" alt="Captura de pantalla 2026-05-25 173618" src="https://github.com/user-attachments/assets/7657428a-4351-4f41-8473-3c0a74353f41" />
+
+Define como se representa cada registro (fila) en memoria: 
+- Los campos numéricos son `streams` (col 6) e `in_shazam` (col 11).
+- Los campos categóricos son `key` (col 13) y `mode` (col 14).
+Se utilizan estas columnas ya que contiene valores nulos reales y permiten realizar la normalización en el dataset.
+
+### Variables globales y mutex
+<img width="918" height="195" alt="image" src="https://github.com/user-attachments/assets/a4c45e83-39f3-4423-8ece-037779b46773" />
+
+| Elemento | Descripción |
+| :--- | :--- |
+| `Transaccion dataset[MAX_FILAS]` | Arreglo compartido entre todos los hilos donde se almacenan los 953 registros (canciones). |
+| `total_registros` | Contador que guarda cuántas filas se leyeron del archivo CSV. |
+| `mutex_stats` | Mecanismo de sincronización (Mutex) que evita condiciones de carrera cuando los hilos modifican `total_nulos` y `total_modas` al mismo tiempo. |
+
+### Función para calcular el tiempo de ejecución
+<img width="921" height="106" alt="image" src="https://github.com/user-attachments/assets/a80841ac-68c8-4b76-90bc-11461f604914" />
+
+Calcula la diferencia entre dos marcas de tiempo en segundos con precisión de nanosegundos.
+`struct timespec` es una estructura de la librería `time.h` que permite obtener un momento en el tiempo con dos campos:
+- `tv_sec:` segundos
+- `tv_nsec:` nanosegundos
+
+### Función para cargar datos del csv
+<img width="718" height="516" alt="image" src="https://github.com/user-attachments/assets/b4e43677-d994-4934-b6a0-6b93810798ec" />
+<img width="601" height="539" alt="image" src="https://github.com/user-attachments/assets/1745908c-aae5-4479-b983-ac76ebc4fef1" />
+
+Primero, se inicia abriendo el archivo csv con `fopen` y saltándose el encabezado con `fgets`. Y, antes de leer cada fila, inicializa todos los campos con sus valores nulos (`-1.0` para numéricos, `"VACIO"` para categóricos) con `strcpy`, para poder detectarlos facilmente en el procesamiento.
+
+Luega, esta función lee el CSV línea por línea y divide cada una por comas con `strsep` y revisa el número de columna para guardar solo las necesarias: `stream`, `in_shazam` y `key`, donde, con `strlen` se verifica si un campo del csv tiene algún o valor o está vacío.
+
+### Transacciones
+#### Paso 1: Limpieza de números nulos 
+<img width="922" height="195" alt="image" src="https://github.com/user-attachments/assets/40618289-1d25-4c4e-983c-88f52fcab096" />
+
+Si `in_shazam` vale -1.0, vacío en el csv, se reemplaza con la media aproximada del resto de valores válidos. El mutex protege el contador para que los hilos no lo corrompan. `streams` tiene un funcionamiento parecido.
+
+#### Paso 2: Imputación categórica por moda
+<img width="923" height="191" alt="image" src="https://github.com/user-attachments/assets/90e1a498-0d02-46b1-80da-ce86a0da243f" />
+
+Si `key` es vacío, se reemplaza con "C#" que es la tonalidad más frecuente en el dataset de Spotify 2023. Se utiliza la moda porque con valores de texto no es posible calcular un promedio.
+
+#### Paso 3: Nomralización
+<img width="918" height="84" alt="image" src="https://github.com/user-attachments/assets/3e379f49-e6c3-4261-8ce6-8664b1b9dae6" />
+Escala los valores al rango [0, 1] usando la fórmula min-max: $(x - min) / (max - min)$. Esto permite comparar columnas que originalmente tenían rangos muy distintos como: `streams` que iba hasta 3.5 mil millones, mientras que `in_shazam` iba hasta 2387.
+
+### Hilos
+<img width="916" height="502" alt="image" src="https://github.com/user-attachments/assets/a5ac462e-8690-490b-a384-4dfc2fed905d" />
+
+Es la función que ejecuta cada hilo. Recibe su rango de filas (`inicio` y `fin`), mide su propio tiempo con `clock_gettime`, procesa cada fila llamando a `procesar_transaccion` y al terminar imprime su resultado. El mutex en el `printf` evita que los mensajes de distintos hilos se mezclen en pantalla.
+
+### Main
+#### Modo secuencial
+<img width="920" height="251" alt="image" src="https://github.com/user-attachments/assets/806aeaa0-3685-4062-86e5-c211f8fe5d01" />
+
+El `hilo` main procesa todas las 953 filas solo, una por una. Se toma el tiempo antes y después del bucle para medir exactamente cuánto tarda el procesamiento completo sin paralelismo.
+
+#### Modo paralelo
+<img width="915" height="390" alt="image" src="https://github.com/user-attachments/assets/f0d222d5-39e4-4b7e-bb39-88aa90ab89f7" />
+
+Se reinician los contadores y se recarga el CSV para partir del mismo estado que el modo secuencial. El total de filas se divide en 3 bloques de aproximadamente 317 filas cada uno. 
+
+`pthread_create` lanza cada hilo y `pthread_join` hace que el main espere a que todos terminen antes de mostrar los resultados.
+
+### Resultados
+<img width="919" height="184" alt="image" src="https://github.com/user-attachments/assets/bfc0fad8-0c52-4c7d-a665-d8de553a1b92" />
+
+Muestra el resumen final de la ejecución del programa. Se imprime el tiempo total que tardó el modo secuencial y el modo paralelo, permitiendo comparar directamente la diferencia de rendimiento entre ambos.
+
+Además se muestra el total de nulos numéricos limpiados, que corresponde a los campos de `in_shazam` que estaban vacíos en el CSV y fueron reemplazados con la media aproximada del dataset, y el total de imputaciones categóricas realizadas, que corresponde a los campos de `key` que estaban vacíos y fueron reemplazados con `"C#"`, la moda de dicha columna.
