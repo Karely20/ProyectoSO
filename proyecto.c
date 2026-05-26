@@ -101,15 +101,8 @@ total_registros = i;
 /* procesar_transaccion aplica las 3 transformaciones a una fila */
 void procesar_transaccion(int index){
 	//Paso 1: limpieza de vaores numéricos
-	if(dataset[index].streams < 0){
-		dataset[index].streams = 500000000.0; //Media aprox.
-		pthread_mutex_lock(&mutex_stats);
-		total_nulos++;
-		pthread_mutex_unlock(&mutex_stats);
-	}
-
 	if(dataset[index].in_shazam < 0){
-		dataset[index].in_shazam = 120.0; //Media aprox.
+		dataset[index].in_shazam = 60.0; //Media aprox.
 		pthread_mutex_lock(&mutex_stats);
 		total_nulos++;
 		pthread_mutex_unlock(&mutex_stats);
@@ -124,11 +117,9 @@ void procesar_transaccion(int index){
 	}
 
 	//Paso 3: nomralizacion min-max
-	// Streams: min = 0; max = 3 500 000 000
 	dataset[index].streams = dataset[index].streams / 3500000000;
 
-	//bpm: min = 65, max = 206
-	dataset[index].in_shazam = (dataset[index].in_shazam - 65.0) / (206.0 - 65.0);
+	dataset[index].in_shazam = (dataset[index].in_shazam - 0.0) / (1451.0 - 0.0);
 }
 
 /* Funcion que ejecuta cada pthread */
