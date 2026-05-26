@@ -83,10 +83,10 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
 
 ## Explicación del código
 ### Librerías y constantes
-<img width="920" height="223" alt="image" src="https://github.com/user-attachments/assets/fdb4fa5d-d439-497e-8df1-8e3cbb0856a4" />
-
+<img width="923" height="352" alt="image" src="https://github.com/user-attachments/assets/fb0fbd2c-da1c-4a42-8bdd-7d6b02e36181" />
 
 Se definen las librerías necesarias para el programa:
+
 | Elemento | Descripción |
 | :--- | :--- |
 | `_GNU_SOURCE` <br> `_POSIX_C_SOURCE` | Permiten activar funciones de Linux que facilitan el manejo del CSV y el manejo del tiempo para cada proceso. |
