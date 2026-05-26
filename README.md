@@ -123,9 +123,10 @@ Calcula la diferencia entre dos marcas de tiempo en segundos con precisión de n
 
 ## Función para cargar datos del csv
 <img width="718" height="516" alt="image" src="https://github.com/user-attachments/assets/b4e43677-d994-4934-b6a0-6b93810798ec" />
-<img width="601" height="539" alt="image" src="https://github.com/user-attachments/assets/1745908c-aae5-4479-b983-ac76ebc4fef1" />
 
 Primero, se inicia abriendo el archivo csv con `fopen` y saltándose el encabezado con `fgets`. Y, antes de leer cada fila, inicializa todos los campos con sus valores nulos (`-1.0` para numéricos, `"VACIO"` para categóricos) con `strcpy`, para poder detectarlos facilmente en el procesamiento.
+
+<img width="601" height="539" alt="image" src="https://github.com/user-attachments/assets/1745908c-aae5-4479-b983-ac76ebc4fef1" />
 
 Luega, esta función lee el CSV línea por línea y divide cada una por comas con `strsep` y revisa el número de columna para guardar solo las necesarias: `stream`, `in_shazam` y `key`, donde, con `strlen` se verifica si un campo del csv tiene algún o valor o está vacío.
 
