@@ -188,8 +188,10 @@ Al observar el comportamiento de cada enfoque de manera aislada, se identifican 
  * **Enfoque en Paralelo:** Presenta un costo inicial alto debido al *overhead* (sobrecarga de gestión de hilos/procesos). Al pasar de 7,000 a 15,000 registros, el tiempo se estabiliza (alrededor de los 0.019s), lo que sugiere que la infraestructura paralela empieza a amortizar su costo en volúmenes más grandes.
 
 <img width="919" height="400" alt="Paralelismo" src="Paralelismo.jpeg" />
-## 3. Discusión y Conclusión Directa
-> **Resultado Clave:** Para los volúmenes de datos evaluados (hasta 15,000 registros), el enfoque **Secuencial** es sustancialmente más rápido y eficiente que el enfoque en Paralelo.
+
+### 3. Discusión y Conclusión Directa
+
+* **Resultado Clave:** Para los volúmenes de datos evaluados (hasta 15,000 registros), el enfoque **Secuencial** es sustancialmente más rápido y eficiente que el enfoque en Paralelo.
 
 
 <img width="919" height="400" alt="Conclusion" src="Conclusion.jpeg" />
