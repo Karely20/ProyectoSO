@@ -167,6 +167,29 @@ El `hilo` main procesa todas las 953 filas solo, una por una. Se toma el tiempo 
 Se reinician los contadores y se recarga el CSV para partir del mismo estado que el modo secuencial. El total de filas se divide en 3 bloques de aproximadamente 317 filas cada uno. 
 
 `pthread_create` lanza cada hilo y `pthread_join` hace que el main espere a que todos terminen antes de mostrar los resultados.
+Aquí tienes una propuesta de redacción estructurada en formato **Markdown** basada en la información y los datos que muestran tus diapositivas.
+Está diseñada para ser clara, analítica y directa, ideal si necesitas incluir este texto en un reporte, tesis o presentación de proyecto.
+
+# Análisis Comparativo de Tiempos de Ejecución: Secuencial vs. Paralelo
+## 1. Introducción y Recopilación de Datos
+Para evaluar el rendimiento y la eficiencia de los algoritmos implementados, se realizó un análisis de tiempo comparando la ejecución **Secuencial** y en **Paralelo** utilizando diferentes volúmenes de datos (registros).
+A continuación, se consolidan los tiempos obtenidos (medidos en segundos):
+| Registros | Tiempo Secuencial (s) | Tiempo Paralelo (s) | Mejor Rendimiento |
+|---|---|---|---|
+| **953** | 0.000026 | 0.011218 | Secuencial |
+| **7,000** | 0.000169 | 0.019260 | Secuencial |
+| **15,000** | 0.000552 | 0.019139 | Secuencial |
+## 2. Visualización Individual de Tendencias
+Al observar el comportamiento de cada enfoque de manera aislada, se identifican las siguientes dinámicas:
+ * **Enfoque Secuencial:** Muestra un crecimiento de tipo lineal o exponencial directamente proporcional al número de registros. A medida que la carga aumenta de 953 a 15,000 registros, el tiempo se incrementa visiblemente de 0.000026\text{ s} a 0.000552\text{ s}.
+ * **Enfoque en Paralelo:** Presenta un costo inicial alto debido al *overhead* (sobrecarga de gestión de hilos/procesos). Al pasar de 7,000 a 15,000 registros, el tiempo se estabiliza (alrededor de los 0.019\text{ s}), lo que sugiere que la infraestructura paralela empieza a amortizar su costo en volúmenes más grandes.
+## 3. Discusión y Conclusión Directa
+> **Resultado Clave:** Para los volúmenes de datos evaluados (hasta 15,000 registros), el enfoque **Secuencial** es sustancialmente más rápido y eficiente que el enfoque en Paralelo.
+> 
+### ¿Por qué ocurre esto?
+La ventaja del procesamiento secuencial en estos rangos se debe a que la cantidad de registros aún es **demasiado pequeña** para justificar la paralelización. En sistemas paralelos, la creación, sincronización y comunicación entre hilos genera un tiempo de retraso base (*overhead*).
+Si el trabajo a realizar por cada hilo es mínimo (como ocurre con 15,000 registros o menos), el sistema gasta más tiempo administrando los hilos que procesando los datos reales. El paralelismo comenzará a mostrar su verdadera ventaja competitiva únicamente en volúmenes de datos masivos (escalas de cientos de miles o millones de registros), donde el procesamiento secuencial se vuelva un cuello de botella.
+
 
 ## Resultados
 <img width="919" height="184" alt="image" src="https://github.com/user-attachments/assets/bfc0fad8-0c52-4c7d-a665-d8de553a1b92" />
