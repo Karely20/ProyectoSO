@@ -111,7 +111,7 @@ Se utilizan estas columnas ya que contiene valores nulos reales y permiten reali
 | :--- | :--- |
 | `Transaccion dataset[MAX_FILAS]` | Arreglo compartido entre todos los hilos donde se almacenan los 953 registros (canciones). |
 | `total_registros` | Contador que guarda cuántas filas se leyeron del archivo CSV. |
-| `mutex_stats` | Mecanismo de sincronización que evita condiciones de carrera cuando los hilos modifican `total_nulos` y `total_modas` al mismo tiempo. |
+| `mutex_stats` | Mecanismo de sincronización que evita que los hilos modifican `total_nulos` y `total_modas` al mismo tiempo. |
 
 ### Función para calcular el tiempo de ejecución
 <img width="921" height="106" alt="image" src="https://github.com/user-attachments/assets/a80841ac-68c8-4b76-90bc-11461f604914" />
