@@ -139,11 +139,14 @@ Si `in_shazam` vale -1.0, vacío en el CSV, se reemplaza con la media aproximada
 ### Paso 2: Imputación categórica por moda
 <img width="923" height="191" alt="image" src="https://github.com/user-attachments/assets/90e1a498-0d02-46b1-80da-ce86a0da243f" />
 
-Si `key` es vacío, se reemplaza con "C#" que es la tonalidad más frecuente en el dataset de Spotify 2023. Se utiliza la moda porque con valores de texto no es posible calcular un promedio.
+Si `key` es vacío, se reemplaza con `"C#"` que es la tonalidad más frecuente en el dataset de Spotify 2023. Se utiliza la moda porque con valores de texto no es posible calcular un promedio.
 
 ### Paso 3: Nomralización
 <img width="918" height="84" alt="image" src="https://github.com/user-attachments/assets/3e379f49-e6c3-4261-8ce6-8664b1b9dae6" />
-Escala los valores al rango [0, 1] usando la fórmula min-max: $(x - min) / (max - min)$. Esto permite comparar columnas que originalmente tenían rangos muy distintos como: `streams` que iba hasta 3.5 mil millones, mientras que `in_shazam` iba hasta 2387.
+
+Escala los valores al rango [0, 1] usando la fórmula min-max: 
+$$x_{norm} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}$$
+Esto permite comparar columnas que originalmente tenían rangos muy distintos como: `streams` que iba hasta 3.5 mil millones, mientras que `in_shazam` iba hasta 2387.
 
 ## Hilos
 <img width="916" height="502" alt="image" src="https://github.com/user-attachments/assets/a5ac462e-8690-490b-a384-4dfc2fed905d" />
