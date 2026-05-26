@@ -87,10 +87,6 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
 
 
 Se definen las librerías necesarias para el programa:
-## Configuración y Dependencias
-
-A continuación se detallan las directivas, librerías y constantes clave utilizadas en el desarrollo de este proyecto:
-
 | Elemento | Descripción |
 | :--- | :--- |
 | `_GNU_SOURCE` <br> `_POSIX_C_SOURCE` | Permiten activar funciones de Linux que facilitan el manejo del CSV y el manejo del tiempo para cada proceso. |
