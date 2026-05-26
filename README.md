@@ -145,7 +145,9 @@ Si `key` es vacío, se reemplaza con `"C#"` que es la tonalidad más frecuente e
 <img width="918" height="84" alt="image" src="https://github.com/user-attachments/assets/3e379f49-e6c3-4261-8ce6-8664b1b9dae6" />
 
 Escala los valores al rango [0, 1] usando la fórmula min-max: 
+
 $$x_{norm} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}$$
+
 Esto permite comparar columnas que originalmente tenían rangos muy distintos como: `streams` que iba hasta 3.5 mil millones, mientras que `in_shazam` iba hasta 2387.
 
 ## Hilos
