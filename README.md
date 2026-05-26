@@ -181,8 +181,8 @@ A continuación, se consolidan los tiempos obtenidos (medidos en segundos):
 | **15,000** | 0.000552 | 0.019139 | Secuencial |
 ## 2. Visualización Individual de Tendencias
 Al observar el comportamiento de cada enfoque de manera aislada, se identifican las siguientes dinámicas:
- * **Enfoque Secuencial:** Muestra un crecimiento de tipo lineal o exponencial directamente proporcional al número de registros. A medida que la carga aumenta de 953 a 15,000 registros, el tiempo se incrementa visiblemente de 0.000026\text{ s} a 0.000552\text{ s}.
- * **Enfoque en Paralelo:** Presenta un costo inicial alto debido al *overhead* (sobrecarga de gestión de hilos/procesos). Al pasar de 7,000 a 15,000 registros, el tiempo se estabiliza (alrededor de los 0.019\text{ s}), lo que sugiere que la infraestructura paralela empieza a amortizar su costo en volúmenes más grandes.
+ * **Enfoque Secuencial:** Muestra un crecimiento de tipo lineal o exponencial directamente proporcional al número de registros. A medida que la carga aumenta de 953 a 15,000 registros, el tiempo se incrementa visiblemente de 0.000026s a 0.000552s.
+ * **Enfoque en Paralelo:** Presenta un costo inicial alto debido al *overhead* (sobrecarga de gestión de hilos/procesos). Al pasar de 7,000 a 15,000 registros, el tiempo se estabiliza (alrededor de los 0.019s), lo que sugiere que la infraestructura paralela empieza a amortizar su costo en volúmenes más grandes.
 ## 3. Discusión y Conclusión Directa
 > **Resultado Clave:** Para los volúmenes de datos evaluados (hasta 15,000 registros), el enfoque **Secuencial** es sustancialmente más rápido y eficiente que el enfoque en Paralelo.
 > 
