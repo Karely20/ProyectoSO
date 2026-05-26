@@ -121,7 +121,7 @@ Calcula la diferencia entre dos marcas de tiempo en segundos con precisión de n
 - `tv_sec:` segundos
 - `tv_nsec:` nanosegundos
 
-## Función para cargar datos del csv
+## Función para cargar datos del CSV
 <img width="718" height="516" alt="image" src="https://github.com/user-attachments/assets/b4e43677-d994-4934-b6a0-6b93810798ec" />
 
 Primero, se inicia abriendo el archivo csv con `fopen` y saltándose el encabezado con `fgets`. Y, antes de leer cada fila, inicializa todos los campos con sus valores nulos (`-1.0` para numéricos, `"VACIO"` para categóricos) con `strcpy`, para poder detectarlos facilmente en el procesamiento.
