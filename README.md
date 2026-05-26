@@ -132,17 +132,17 @@ Luega, esta función lee el CSV línea por línea y divide cada una por comas co
 
 ## Transacciones
 ### Paso 1: Limpieza de números nulos 
-<img width="922" height="195" alt="image" src="https://github.com/user-attachments/assets/40618289-1d25-4c4e-983c-88f52fcab096" />
+<img width="920" height="193" alt="image" src="https://github.com/user-attachments/assets/04bedd6d-9d80-450d-b36b-b0aacd614d2c" />
 
-Si `in_shazam` vale -1.0, vacío en el CSV, se reemplaza con la media aproximada del resto de valores válidos. El mutex protege el contador para que los hilos no lo corrompan. `streams` tiene un funcionamiento parecido.
+Si `in_shazam` vale -1.0, vacío en el CSV, se reemplaza con la media aproximada del resto de valores válidos. El mutex protege el contador para que los hilos no lo corrompan.
 
 ### Paso 2: Imputación categórica por moda
 <img width="923" height="191" alt="image" src="https://github.com/user-attachments/assets/90e1a498-0d02-46b1-80da-ce86a0da243f" />
 
 Si `key` es vacío, se reemplaza con `"C#"` que es la tonalidad más frecuente en el dataset de Spotify 2023. Se utiliza la moda porque con valores de texto no es posible calcular un promedio.
 
-### Paso 3: Nomralización
-<img width="918" height="84" alt="image" src="https://github.com/user-attachments/assets/3e379f49-e6c3-4261-8ce6-8664b1b9dae6" />
+### Paso 3: Normalización
+<img width="919" height="61" alt="image" src="https://github.com/user-attachments/assets/bc6bd698-d43a-4d66-93c1-c150bdc67460" />
 
 Escala los valores al rango [0, 1] usando la fórmula min-max: 
 
@@ -151,7 +151,7 @@ $$x_{norm} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}$$
 Esto permite comparar columnas que originalmente tenían rangos muy distintos como: `streams` que iba hasta 3.5 mil millones, mientras que `in_shazam` iba hasta 2387.
 
 ## Hilos
-<img width="916" height="502" alt="image" src="https://github.com/user-attachments/assets/a5ac462e-8690-490b-a384-4dfc2fed905d" />
+<img width="920" height="556" alt="image" src="https://github.com/user-attachments/assets/fb42f3ed-712b-472d-bc0f-149f852060c0" />
 
 Es la función que ejecuta cada hilo. Recibe su rango de filas (`inicio` y `fin`), mide su propio tiempo con `clock_gettime`, procesa cada fila llamando a `procesar_transaccion` y al terminar imprime su resultado. El mutex en el `printf` evita que los mensajes de distintos hilos se mezclen en pantalla.
 
