@@ -59,7 +59,7 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
        cd ProyectoSO
    Este proceso descargó automaticamente el dataset y el README al entorno de trabajo.
 
-  4. Dentro de la carpeta del repositorio se creó el archivo `proyecto.c` utilizando el editor de texto `nano`:
+4. Dentro de la carpeta del repositorio se creó el archivo `proyecto.c` utilizando el editor de texto `nano`:
 
          nano proyecto.c
      Se escribió todo el código fuente directamente en la maquina virtual, implementando la lectura del CSV, el procesamiento secuencial, el procesamiento paralelo   con 3 hilos y la medición de tiempos.
@@ -81,8 +81,8 @@ Cada hilo procesa un bloque de filas y aplica 3 transformaciones:
         git commit -m "Proyecto SO"
         git push origin main
 
-## Explicación del código
-### Librerías y constantes
+# Explicación del código
+## Librerías y constantes
 <img width="923" height="352" alt="image" src="https://github.com/user-attachments/assets/fb0fbd2c-da1c-4a42-8bdd-7d6b02e36181" />
 
 Se definen las librerías necesarias para el programa:
@@ -96,7 +96,7 @@ Se definen las librerías necesarias para el programa:
 | `MAX_FILAS` | Es el número máximo de filas del CSV que se pueden procesar. |
 | `NUM_HILOS` | Es la cantidad de hilos paralelos a usar para el procesamiento. |
 
-### Estructura de datos
+## Estructura de datos
 <img width="919" height="217" alt="image" src="https://github.com/user-attachments/assets/23561803-a38e-416a-ac0d-1168f7541c83" />
 
 Define como se representa cada registro (fila) en memoria: 
@@ -104,7 +104,7 @@ Define como se representa cada registro (fila) en memoria:
 - Los campos categóricos son `key` (col 13) y `mode` (col 14).
 Se utilizan estas columnas ya que contiene valores nulos reales y permiten realizar la normalización en el dataset.
 
-### Variables globales y mutex
+## Variables globales y mutex
 <img width="918" height="195" alt="image" src="https://github.com/user-attachments/assets/a4c45e83-39f3-4423-8ece-037779b46773" />
 
 | Elemento | Descripción |
@@ -113,7 +113,7 @@ Se utilizan estas columnas ya que contiene valores nulos reales y permiten reali
 | `total_registros` | Contador que guarda cuántas filas se leyeron del archivo CSV. |
 | `mutex_stats` | Mecanismo de sincronización que evita que los hilos modifican `total_nulos` y `total_modas` al mismo tiempo. |
 
-### Función para calcular el tiempo de ejecución
+## Función para calcular el tiempo de ejecución
 <img width="921" height="106" alt="image" src="https://github.com/user-attachments/assets/a80841ac-68c8-4b76-90bc-11461f604914" />
 
 Calcula la diferencia entre dos marcas de tiempo en segundos con precisión de nanosegundos.
@@ -121,7 +121,7 @@ Calcula la diferencia entre dos marcas de tiempo en segundos con precisión de n
 - `tv_sec:` segundos
 - `tv_nsec:` nanosegundos
 
-### Función para cargar datos del csv
+## Función para cargar datos del csv
 <img width="718" height="516" alt="image" src="https://github.com/user-attachments/assets/b4e43677-d994-4934-b6a0-6b93810798ec" />
 <img width="601" height="539" alt="image" src="https://github.com/user-attachments/assets/1745908c-aae5-4479-b983-ac76ebc4fef1" />
 
@@ -129,40 +129,40 @@ Primero, se inicia abriendo el archivo csv con `fopen` y saltándose el encabeza
 
 Luega, esta función lee el CSV línea por línea y divide cada una por comas con `strsep` y revisa el número de columna para guardar solo las necesarias: `stream`, `in_shazam` y `key`, donde, con `strlen` se verifica si un campo del csv tiene algún o valor o está vacío.
 
-### Transacciones
-#### Paso 1: Limpieza de números nulos 
+## Transacciones
+### Paso 1: Limpieza de números nulos 
 <img width="922" height="195" alt="image" src="https://github.com/user-attachments/assets/40618289-1d25-4c4e-983c-88f52fcab096" />
 
 Si `in_shazam` vale -1.0, vacío en el csv, se reemplaza con la media aproximada del resto de valores válidos. El mutex protege el contador para que los hilos no lo corrompan. `streams` tiene un funcionamiento parecido.
 
-#### Paso 2: Imputación categórica por moda
+### Paso 2: Imputación categórica por moda
 <img width="923" height="191" alt="image" src="https://github.com/user-attachments/assets/90e1a498-0d02-46b1-80da-ce86a0da243f" />
 
 Si `key` es vacío, se reemplaza con "C#" que es la tonalidad más frecuente en el dataset de Spotify 2023. Se utiliza la moda porque con valores de texto no es posible calcular un promedio.
 
-#### Paso 3: Nomralización
+### Paso 3: Nomralización
 <img width="918" height="84" alt="image" src="https://github.com/user-attachments/assets/3e379f49-e6c3-4261-8ce6-8664b1b9dae6" />
 Escala los valores al rango [0, 1] usando la fórmula min-max: $(x - min) / (max - min)$. Esto permite comparar columnas que originalmente tenían rangos muy distintos como: `streams` que iba hasta 3.5 mil millones, mientras que `in_shazam` iba hasta 2387.
 
-### Hilos
+## Hilos
 <img width="916" height="502" alt="image" src="https://github.com/user-attachments/assets/a5ac462e-8690-490b-a384-4dfc2fed905d" />
 
 Es la función que ejecuta cada hilo. Recibe su rango de filas (`inicio` y `fin`), mide su propio tiempo con `clock_gettime`, procesa cada fila llamando a `procesar_transaccion` y al terminar imprime su resultado. El mutex en el `printf` evita que los mensajes de distintos hilos se mezclen en pantalla.
 
-### Main
-#### Modo secuencial
+## Main
+### Modo secuencial
 <img width="920" height="251" alt="image" src="https://github.com/user-attachments/assets/806aeaa0-3685-4062-86e5-c211f8fe5d01" />
 
 El `hilo` main procesa todas las 953 filas solo, una por una. Se toma el tiempo antes y después del bucle para medir exactamente cuánto tarda el procesamiento completo sin paralelismo.
 
-#### Modo paralelo
+### Modo paralelo
 <img width="915" height="390" alt="image" src="https://github.com/user-attachments/assets/f0d222d5-39e4-4b7e-bb39-88aa90ab89f7" />
 
 Se reinician los contadores y se recarga el CSV para partir del mismo estado que el modo secuencial. El total de filas se divide en 3 bloques de aproximadamente 317 filas cada uno. 
 
 `pthread_create` lanza cada hilo y `pthread_join` hace que el main espere a que todos terminen antes de mostrar los resultados.
 
-### Resultados
+## Resultados
 <img width="919" height="184" alt="image" src="https://github.com/user-attachments/assets/bfc0fad8-0c52-4c7d-a665-d8de553a1b92" />
 
 Muestra el resumen final de la ejecución del programa. Se imprime el tiempo total que tardó el modo secuencial y el modo paralelo, permitiendo comparar directamente la diferencia de rendimiento entre ambos.
