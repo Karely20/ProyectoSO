@@ -74,7 +74,7 @@ void cargarDatos(){
 				dataset[i].streams = (strlen(token) > 0) ? atof(token) : -1.0;
 			}
 			else if (col == 11){
-				/*bpm*/
+				/*in_shazam*/
 				dataset[i].in_shazam = (strlen(token) > 0) ? atof(token) : -1.0;
 			}
 			else if(col == 13){
@@ -94,7 +94,7 @@ void cargarDatos(){
 		i++;
 	}
 
-	total_registros = i;
+total_registros = i;
 	fclose(archivo);
 }
 
@@ -179,7 +179,7 @@ int main(){
 	cargarDatos(); //Recarga csv con nulos originales
 
 	// 4. MODO PARALELO
-	printf("=== MODO PARALELO (% hilos) ===\n", NUM_HILOS);
+	printf("=== MODO PARALELO (%d hilos) ===\n", NUM_HILOS);
 	pthread_t hilos[NUM_HILOS];
 	ArgsHilo args[NUM_HILOS];
 	int bloque = total_registros / NUM_HILOS;
@@ -202,8 +202,6 @@ int main(){
 	printf("\n========================\n");
 	printf("TIEMPO SECUENCIAL: %.6f s\n", t_sec);
 	printf("TIEMPO PARALELO: %.6f s\n", t_par);
-	printf("Speedup: %.2fx\n", t_sec / t_par);
-	printf("Eficiencia: %.1f%%\n", (t_sec / t_par / NUM_HILOS) * 100.0);
 	printf("=========================\n");
 	printf("Nulos numéricos limpiados: %d\n", total_nulos);
 	printf("Imputaciones con la moda: %d\n", total_modas);
