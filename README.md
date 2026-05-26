@@ -97,7 +97,7 @@ Se definen las librerías necesarias para el programa:
 | `NUM_HILOS` | Es la cantidad de hilos paralelos a usar para el procesamiento. |
 
 ### Estructura de datos
-<img width="916" height="223" alt="Captura de pantalla 2026-05-25 173618" src="https://github.com/user-attachments/assets/7657428a-4351-4f41-8473-3c0a74353f41" />
+<img width="919" height="217" alt="image" src="https://github.com/user-attachments/assets/23561803-a38e-416a-ac0d-1168f7541c83" />
 
 Define como se representa cada registro (fila) en memoria: 
 - Los campos numéricos son `streams` (col 6) e `in_shazam` (col 11).
